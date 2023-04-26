@@ -1,10 +1,74 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="ISO-8859-1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Hospital Management System</title>
 </head>
 <body>
-$END$
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+    <!-- Brand -->
+    <a class="navbar-brand" href="#">Hospital Management System</a>
+
+    <!-- Toggler/collapsibe Button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar links -->
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/hospital}">Hospital Management</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/hospital}">Patient Management</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="container mt-5">
+    <h2 align="center">Welcome to Hospital Management System</h2>
+    <form th:action="@{/search}" method="get">
+        <input type="text" name="keyword" th:value="${keyword}"  placeholder="Enter first name or email" size="50" >
+        <button type="submit" class="btn btn-info" >Search</button>
+        <button type="submit" class="btn btn-info" >Get All List</button>
+    </form>
+    <table class = "table table-striped table-bordered">
+        <thead class = "table-dark">
+        <tr>
+            <th> Doctor Name</th>
+            <th> Patient Name</th>
+            <th> Appointment Date </th>
+            <th> Patient Phone </th>
+            <th> Doctor Fee</th>
+            <th> Actions </th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each = "hospital: ${list}">
+            <td th:text = "${hospital.doctorName}"></td>
+            <td th:text = "${hospital.patientName}"></td>
+            <td th:text = "${hospital.appointmentDate}"></td>
+            <td th:text = "${hospital.patientPhone}"></td>
+            <td th:text = "${hospital.fee}"></td>
+
+            <td>
+                <a th:href = "@{/hospital/edit/{id}(id=${hospital.id})}"
+                   class = "btn btn-primary">Update</a>
+
+                <a th:href = "@{/hospital/{id}(id=${hospital.id})}"
+                   class = "btn btn-danger">Delete</a>
+
+            </td>
+        </tr>
+        </tbody>
+
+    </table>
+</div>
 </body>
 </html>
